@@ -1,0 +1,3 @@
+browser {
+  -moz-binding: url("vimkeybindings.xml#normal");
+}

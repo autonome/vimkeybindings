@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<bindings id="vimkeybindings" xmlns="http://www.mozilla.org/xbl">
+  <binding id="normal" extends="chrome://global/content/bindings/browser.xml#browser">
+    <handlers>
+      
+      <handler event="keypress" key="h" command="cmd_scrollLeft"/>
+      <handler event="keypress" key="j" command="cmd_scrollLineDown"/>
+      <handler event="keypress" key="k" command="cmd_scrollLineUp"/>
+      <handler event="keypress" key="l" command="cmd_scrollRight"/>
+
+      <handler event="keypress" key="g" command="cmd_scrollTop"/>
+      <handler event="keypress" key="g" modifiers="shift" command="cmd_scrollBottom"/>
+
+    </handlers>
+  </binding>
+</bindings>

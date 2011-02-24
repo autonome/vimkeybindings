@@ -1,0 +1,3 @@
+content	vimkeybindings	content/
+style	  chrome://browser/content/browser.xul	chrome://vimkeybindings/content/vimkeybindings.css
+skin	  vimkeybindings  classic/1.0	skin/

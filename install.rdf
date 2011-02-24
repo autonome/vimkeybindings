@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+	<Description about="urn:mozilla:install-manifest">
+
+    <em:id>vimkeybindings@autonome.wordpress.com</em:id>
+		<em:name>vimkeybindings</em:name>
+    <em:version>1.3</em:version>
+    <em:author>Dietrich Ayala</em:author>
+    <em:description>Firefox with a few vi(m) keybindings (originally by the author of http://www.oreillynet.com/linux/blog/2006/04/firefox_with_vim_keybindings.html, and packaged by Arno, a commenter there, updated and repackaged by me).</em:description>
+
+		<em:type>2</em:type> <!-- type=extension --> 
+
+		<!-- Firefox -->
+		<em:targetApplication>
+			<Description>
+				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+				<em:minVersion>1.5</em:minVersion>
+				<em:maxVersion>4.0</em:maxVersion>
+			</Description>
+		</em:targetApplication>
+
+	</Description>
+</RDF>
