@@ -1,0 +1,14 @@
+{
+  "title": "vimkeybindings",
+  "name": "vimkeybindings",
+  "version": "1.5",
+  "description": "Vi(m) directional keybindings for Firefox.",
+  "main": "index.js",
+  "author": "Dietrich Ayala",
+  "engines": {
+    "firefox": ">=33.0a1"
+  },
+  "license": "MIT",
+  "permissions": {"private-browsing": true},
+  "id": "vimkeybindings@autonome.wordpress.com"
+}
