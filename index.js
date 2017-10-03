@@ -22,11 +22,16 @@ function currentAndFutureWindows(func) {
   
 function onWindow(window) {
   window.gBrowser.addEventListener("keypress", function(event) {
+    // see if the key matches one of our vim command keys
     var action = actions.find(function(value) {
       return value.key == event.key;
     });
 
-    if (action) {
+    // don't execute when in contenteditable elements
+    //console.log(event.target)
+    var notContentEditable = !event.target.getAttribute('contenteditable');
+
+    if (action && notContentEditable) {
       runCommand(action.command);
     }
   }, false);
