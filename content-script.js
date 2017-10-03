@@ -8,6 +8,7 @@ var actions = [
   {key: 'j', command: 'cmd_scrollLineDown'},
   {key: 'k', command: 'cmd_scrollLineUp'},
   {key: 'l', command: 'cmd_scrollRight'},
+  {key: 'g', command: 'cmd_scrollFileTop'},
   {key: 'G', command: 'cmd_scrollFileBottom'},
   /*
   {key: 'gg', command: 'cmd_scrollFileTop'},
@@ -33,11 +34,9 @@ var commands = {
   cmd_scrollFileBottom: function() {
     window.scrollTo(window.scrollX, document.body.scrollHeight);
   },
-  /*
   cmd_scrollFileTop: function() {
     window.scrollTo(window.scrollX, 0);
   }
-  */
 };
 
 document.addEventListener("keypress", function(event) {

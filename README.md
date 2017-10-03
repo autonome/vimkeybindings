@@ -1,7 +1,7 @@
 # Firefox extension with a few vi(m) keybindings.
 
-[Install](http://j.mp/hnuo2O)
-[Source on Github](http://j.mp/hKMV6t)
+* [Install](http://j.mp/hnuo2O)
+* [Source on Github](http://j.mp/hKMV6t)
 
 ## Supported Commands
 
