@@ -1,7 +1,7 @@
 # Firefox extension with a few vi(m) keybindings.
 
-* [Install](http://j.mp/hnuo2O)
-* [Source on Github](http://j.mp/hKMV6t)
+* [Install](https://addons.mozilla.org/en-US/firefox/addon/vimkeybindings/)
+* [Source on Github](https://github.com/autonome/vimkeybindings)
 
 ## Supported Commands
 
