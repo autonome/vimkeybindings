@@ -1,7 +1,9 @@
-Firefox add-on with a few vi(m) keybindings.
+# Firefox extension with a few vi(m) keybindings.
 
-<p><a href="http://j.mp/hnuo2O">Install</a></p>
-<p><a href="http://j.mp/hKMV6t">Source on Github</a></p>
+[Install](http://j.mp/hnuo2O)
+[Source on Github](http://j.mp/hKMV6t)
+
+## Supported Commands
 
 * h : scroll left
 * j : scroll down
@@ -10,4 +12,11 @@ Firefox add-on with a few vi(m) keybindings.
 * g : go to the top of the page
 * G (shift-g) : go to the bottom of the page
 
-Originally by the author of http://www.oreillynet.com/linux/blog/2006/04/firefox_with_vim_keybindings.html, and packaged by Arno, a commenter there, then updated and repackaged by me. Documented by Christopher Svec.
+
+## Credits
+
+* Originally by the author of [this O'Reilly post](http://www.oreillynet.com/linux/blog/2006/04/firefox_with_vim_keybindings.html)
+* Packaged by Arno, a commenter there
+* Updated and repackaged by me on AMO
+* Documented by Christopher Svec
+* Rewritten from scratch with the WebExtensions API for Firefox 53 and after (and a few before) by me
