@@ -3,7 +3,7 @@
   "name": "vimkeybindings",
   "description": "Vi(m) directional keybindings for Firefox.",
   "author": "Dietrich Ayala",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "applications": {
     "gecko": {
       "id": "vimkeybindings@autonome.wordpress.com"

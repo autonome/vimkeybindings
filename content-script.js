@@ -56,8 +56,10 @@ document.addEventListener("keypress", function(event) {
   }
 
   // bail if in contenteditable elements, textareas, inputs, etc
-  var contentEditable = event.target.getAttribute('contenteditable');
-  if (contentEditable) {
+  const contentEditable = event.target.getAttribute('contenteditable');
+  const formElements = ['input', 'textarea', 'select'];
+  const isFormElement = formElements.indexOf(event.target.tagName.toLowerCase()) != -1;
+  if (contentEditable || isFormElement) {
     return;
   }
 
