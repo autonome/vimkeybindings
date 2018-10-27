@@ -3,22 +3,21 @@ const SCROLL_LINE_COUNT = 1;
 
 const SCROLL_HORIZONTAL_PIXELS = 5;
 
-var actions = [
-  {key: 'h', command: 'cmd_scrollLeft'},
-  {key: 'j', command: 'cmd_scrollLineDown'},
-  {key: 'k', command: 'cmd_scrollLineUp'},
-  {key: 'l', command: 'cmd_scrollRight'},
-  {key: 'g', command: 'cmd_scrollFileTop'},
-  {key: 'G', command: 'cmd_scrollFileBottom'},
+const actions = [
+  { keyCombination: 'h', command: 'cmd_scrollLeft' },
+  { keyCombination: 'j', command: 'cmd_scrollLineDown' },
+  { keyCombination: 'k', command: 'cmd_scrollLineUp' },
+  { keyCombination: 'l', command: 'cmd_scrollRight' },
+  { keyCombination: 'G', command: 'cmd_scrollFileBottom' },
+  { keyCombination: 'gg', command: 'cmd_scrollFileTop' },
   /*
-  {key: 'gg', command: 'cmd_scrollFileTop'},
-  {key: 'H', command: 'cmd_scrollScreenTop'},
-  {key: 'M', command: 'cmd_scrollScreenMiddle'},
-  {key: 'L', command: 'cmd_scrollScreenBottom'}
+  {keyCombination: 'H', command: 'cmd_scrollScreenTop'},
+  {keyCombination: 'M', command: 'cmd_scrollScreenMiddle'},
+  {keyCombination: 'L', command: 'cmd_scrollScreenBottom'},
   */
 ];
 
-var commands = {
+const commands = {
   cmd_scrollLeft: function() {
     document.body.scrollLeft -= SCROLL_HORIZONTAL_PIXELS;
   },
@@ -39,29 +38,71 @@ var commands = {
   }
 };
 
-document.addEventListener("keypress", function(event) {
+//Store the longest action combination's length as the max length
+const maxCombinationLength = actions.reduce((acc, curr) => Math.max(curr.keyCombination.length, acc), 0);
+const numbers = [];
+let repetition = "";
+let keyCombination = "";
+
+//Stringify numbers
+for (let i = 0; i < 10; ++i) {
+  numbers.push(`${i}`);
+}
+
+/**
+ * Resets the repetition and key combination histories
+ * @method
+ */
+function resetHistory() {
+    repetition = "";
+    keyCombination = "";
+}
+
+/**
+ * Runs a command 
+ * @param {string} command
+ */
+function runCommand(command) {
+  const repeat = repetition == "" ? 1 : +repetition;
+
+  for (let i = 0; i < repeat; ++i) {
+    commands[command]();
+  }
+
+  resetHistory();
+}
+
+document.addEventListener("keypress", event => {
   // TODO: bail if unsupported modifiers
 
-  // TODO: support multichar comments, eg "gg"
+  //Check if a number key is pressed (for repetition)
+  if (numbers.includes(event.key)) {
+    repetition += event.key;
+    return;
+  }
 
+  //Store the key
+  keyCombination += event.key;
 
-  // see if the key matches one of our vim command keys
-  var action = actions.find(function(value) {
-    return value.key == event.key;
-  });
+  // see if the key combination matches one of our vim command combinations
+  const action = actions.find(value => value.keyCombination == keyCombination);
   
   // bail if not supported action
   if (!action) {
+    //If the combination length is reached the max length, there are no possible actions left.
+    if (keyCombination.length == maxCombinationLength) resetHistory();
     return;
-  }
+  };
 
   // bail if in contenteditable elements, textareas, inputs, etc
   const contentEditable = event.target.getAttribute('contenteditable');
   const formElements = ['input', 'textarea', 'select'];
   const isFormElement = formElements.indexOf(event.target.tagName.toLowerCase()) != -1;
-  if (contentEditable || isFormElement) {
-    return;
-  }
 
-  commands[action.command]();
+  if (contentEditable || isFormElement) {
+    resetHistory();
+    return;
+  };
+
+  runCommand(action.command);
 }, false);

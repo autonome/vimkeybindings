@@ -9,7 +9,7 @@
 * j : scroll down
 * k : scroll up
 * l : scroll right
-* g : go to the top of the page
+* gg : go to the top of the page
 * G (shift-g) : go to the bottom of the page
 
 
