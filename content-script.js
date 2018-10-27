@@ -10,6 +10,8 @@ const actions = [
   { keyCombination: 'l', command: 'cmd_scrollRight' },
   { keyCombination: 'G', command: 'cmd_scrollFileBottom' },
   { keyCombination: 'gg', command: 'cmd_scrollFileTop' },
+  { keyCombination: 'gt', command: 'cmd_activateNextTab' },
+  { keyCombination: 'gT', command: 'cmd_activatePreviousTab' },
   /*
   {keyCombination: 'H', command: 'cmd_scrollScreenTop'},
   {keyCombination: 'M', command: 'cmd_scrollScreenMiddle'},
@@ -18,29 +20,55 @@ const actions = [
 ];
 
 const commands = {
-  cmd_scrollLeft: function() {
-    document.body.scrollLeft -= SCROLL_HORIZONTAL_PIXELS;
+  cmd_scrollLeft: function(repetition) {
+    const repeat = repetition == "" ? 1 : +repetition;
+
+    document.body.scrollLeft -= SCROLL_HORIZONTAL_PIXELS * repeat;
   },
-  cmd_scrollRight: function() {
-    document.body.scrollLeft += SCROLL_HORIZONTAL_PIXELS;
+  cmd_scrollRight: function(repetition) {
+    const repeat = repetition == "" ? 1 : +repetition;
+
+    document.body.scrollLeft += SCROLL_HORIZONTAL_PIXELS * repeat;
   },
-  cmd_scrollLineDown: function() {
-    window.scrollByLines(SCROLL_LINE_COUNT);
+  cmd_scrollLineDown: function(repetition) {
+    const repeat = repetition == "" ? 1 : +repetition;
+
+    window.scrollByLines(SCROLL_LINE_COUNT * repeat);
   },
-  cmd_scrollLineUp: function() {
-    window.scrollByLines(-SCROLL_LINE_COUNT);
+  cmd_scrollLineUp: function(repetition) {
+    const repeat = repetition == "" ? 1 : +repetition;
+
+    window.scrollByLines(-SCROLL_LINE_COUNT * repeat);
   },
   cmd_scrollFileBottom: function() {
     window.scrollTo(window.scrollX, document.body.scrollHeight);
   },
   cmd_scrollFileTop: function() {
     window.scrollTo(window.scrollX, 0);
+  },
+  cmd_activateNextTab: function (repetition) {
+    browser.runtime.sendMessage({
+      message: {
+        to: 'background',
+        command: 'activateNextTab',
+        repetition,
+      }
+    });
+  },
+  cmd_activatePreviousTab: function (repetition) {
+    browser.runtime.sendMessage({
+      message: {
+        command: 'activatePreviousTab',
+        repetition,
+      }
+    });
   }
 };
 
 //Store the longest action combination's length as the max length
 const maxCombinationLength = actions.reduce((acc, curr) => Math.max(curr.keyCombination.length, acc), 0);
 const numbers = [];
+const validKeys = new Set();
 let repetition = "";
 let keyCombination = "";
 
@@ -48,6 +76,12 @@ let keyCombination = "";
 for (let i = 0; i < 10; ++i) {
   numbers.push(`${i}`);
 }
+
+actions.map(action => {
+  for (let i = 0; i < action.keyCombination.length; ++i) {
+    validKeys.add(action.keyCombination[i]);
+  }
+});
 
 /**
  * Resets the repetition and key combination histories
@@ -59,25 +93,24 @@ function resetHistory() {
 }
 
 /**
- * Runs a command 
- * @param {string} command
+ * Runs an action 
+ * @param {VimBindings~action} action
  */
-function runCommand(command) {
-  const repeat = repetition == "" ? 1 : +repetition;
-
-  for (let i = 0; i < repeat; ++i) {
-    commands[command]();
-  }
-
+function runAction(action) {
+  commands[action.command](repetition);
   resetHistory();
 }
 
 document.addEventListener("keypress", event => {
-  // TODO: bail if unsupported modifiers
-
   //Check if a number key is pressed (for repetition)
   if (numbers.includes(event.key)) {
     repetition += event.key;
+    return;
+  }
+
+  //If a non-command key is pressed, bail
+  if (!validKeys.has(event.key)) {
+    resetHistory();
     return;
   }
 
@@ -104,5 +137,13 @@ document.addEventListener("keypress", event => {
     return;
   };
 
-  runCommand(action.command);
+  runAction(action);
 }, false);
+
+/**
+ * @typedef VimBindings~action
+ * @type {object}
+ * @property {string} keyCombination The keystroke combination
+ * @property {string} command The name of the command function
+ * @property {boolean} background Background command. Will run by the background script.
+ */
