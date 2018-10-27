@@ -26,7 +26,7 @@ async function activateTab(currentTab, commandRepetition, direction) {
     const { id, index, windowId } = currentTab;
     const tabs = await browser.tabs.query({ windowId, hidden: false });
     const tabCount = tabs.length;
-    let tabIndex;
+    let tabIndex = null;
 
     switch (direction) {
       case "next":
@@ -52,7 +52,9 @@ async function activateTab(currentTab, commandRepetition, direction) {
       break;
     }
 
-    browser.tabs.update(tabs[tabIndex].id, { active: true });
+    if (tabIndex !== null) {
+      browser.tabs.update(tabs[tabIndex].id, { active: true });
+    }
   } catch (ex) {
     //TODO: Handle error?
   }
