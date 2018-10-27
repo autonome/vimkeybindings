@@ -145,5 +145,4 @@ document.addEventListener("keypress", event => {
  * @type {object}
  * @property {string} keyCombination The keystroke combination
  * @property {string} command The name of the command function
- * @property {boolean} background Background command. Will run by the background script.
  */
