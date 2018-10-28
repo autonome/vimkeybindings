@@ -5,13 +5,7 @@
  * @returns {number}
  */
 function positiveModulo(number, modulosOf) {
-  if (number >= 0) return number % modulosOf;
-
-  // Example: -17 mod 5
-  // divison = -17 / 5 = 3 (get rid of the remainder)
-  // now if we add up the number with (divison+1)*modulosOf we will have a positive number
-  // (-17) + (division+1)*5 = 3
-  return number + (Math.floor((-1) * number / modulosOf) + 1) * modulosOf;
+  return Math.abs(number % modulosOf);
 }
 
 /**
