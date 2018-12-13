@@ -9,9 +9,13 @@
 * j : scroll down
 * k : scroll up
 * l : scroll right
-* g : go to the top of the page
+* gg : go to the top of the page
 * G (shift-g) : go to the bottom of the page
+* gt : go to the next tab
+* gT : go to the previous tab
+* {n}gt : go to the nth tab
 
+Commands can be repeated as in vim. Example: 50j will scroll down 50 lines.
 
 ## Credits
 
